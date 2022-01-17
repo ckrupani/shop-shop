@@ -1,13 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+
 import { pluralize } from "../../utils/helpers";
-import { useStoreContext } from "../../utils/GlobalState";
 import { ADD_TO_CART, UPDATE_CART_QUANTITY } from "../../utils/actions";
 import { idbPromise } from "../../utils/helpers";
 
-function ProductItem(item) {
+function ProductItem({ state, dispatch, ...item }) {
     const { image, name, _id, price, quantity } = item;
-    const [state, dispatch] = useStoreContext();
     const { cart } = state;
 
     const addToCart = () => {
@@ -53,4 +53,16 @@ function ProductItem(item) {
     );
 }
 
-export default ProductItem;
+const mapStateToProps = (state) => {
+    return {
+        state,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        dispatch,
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductItem);

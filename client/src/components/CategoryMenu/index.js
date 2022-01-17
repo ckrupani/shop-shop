@@ -1,16 +1,15 @@
 import React, { useEffect } from "react";
 import { useQuery } from "@apollo/client";
+import { connect } from "react-redux";
+
 import { QUERY_CATEGORIES } from "../../utils/queries";
-import { useStoreContext } from "../../utils/GlobalState";
 import { idbPromise } from "../../utils/helpers";
 import {
     UPDATE_CATEGORIES,
     UPDATE_CURRENT_CATEGORY,
 } from "../../utils/actions";
 
-function CategoryMenu() {
-    const [state, dispatch] = useStoreContext();
-
+function CategoryMenu({ state, dispatch }) {
     const { categories } = state;
 
     const { loading, data: categoryData } = useQuery(QUERY_CATEGORIES);
@@ -61,4 +60,16 @@ function CategoryMenu() {
     );
 }
 
-export default CategoryMenu;
+const mapStateToProps = (state) => {
+    return {
+        state,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        dispatch,
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CategoryMenu);

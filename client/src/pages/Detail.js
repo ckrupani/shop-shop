@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
+import { connect } from "react-redux";
 
 import { QUERY_PRODUCTS } from "../utils/queries";
-import { useStoreContext } from "../utils/GlobalState";
 import { idbPromise } from "../utils/helpers";
 import {
     REMOVE_FROM_CART,
@@ -15,8 +15,7 @@ import {
 import spinner from "../assets/spinner.gif";
 import Cart from "../components/Cart";
 
-function Detail() {
-    const [state, dispatch] = useStoreContext();
+function Detail({ state, dispatch }) {
     const { id } = useParams();
 
     const [currentProduct, setCurrentProduct] = useState({});
@@ -123,4 +122,16 @@ function Detail() {
     );
 }
 
-export default Detail;
+const mapStateToProps = (state) => {
+    return {
+        state,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        dispatch,
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Detail);

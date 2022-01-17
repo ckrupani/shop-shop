@@ -1,16 +1,14 @@
 import React, { useEffect } from "react";
 import { useQuery } from "@apollo/client";
+import { connect } from "react-redux";
 
 import ProductItem from "../ProductItem";
 import { QUERY_PRODUCTS } from "../../utils/queries";
-import { useStoreContext } from "../../utils/GlobalState";
 import { UPDATE_PRODUCTS } from "../../utils/actions";
 import spinner from "../../assets/spinner.gif";
 import { idbPromise } from "../../utils/helpers";
 
-function ProductList() {
-    const [state, dispatch] = useStoreContext();
-
+function ProductList({ state, dispatch }) {
     const { products, currentCategory } = state;
 
     const { loading, data } = useQuery(QUERY_PRODUCTS);
@@ -72,4 +70,16 @@ function ProductList() {
     );
 }
 
-export default ProductList;
+const mapStateToProps = (state) => {
+    return {
+        state,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        dispatch,
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductList);

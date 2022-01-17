@@ -3,12 +3,15 @@ import ProductList from "../components/ProductList";
 import CategoryMenu from "../components/CategoryMenu";
 import Cart from "../components/Cart";
 
-const Home = () => (
-    <div className="container">
-        <CategoryMenu />
-        <ProductList />
-        <Cart />
-    </div>
-);
+const Home = () => {
+    console.log("Rendering Home");
+    return (
+        <div className="container">
+            <CategoryMenu />
+            <ProductList />
+            <Cart />
+        </div>
+    );
+};
 
 export default Home;
